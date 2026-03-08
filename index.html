@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MDO-Nexus-OODA | Cross-Domain Synergy Engine</title>
+  <meta name="description" content="Multi-Domain Operations dashboard with OODA loop, cybernetics convergence, and cross-domain synergy visualization"/>
+  <link rel="manifest" href="manifest.json"/>
+  <meta name="theme-color" content="#0a0a0f"/>
+  <meta name="mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+  <link rel="stylesheet" href="css/style.css"/>
+</head>
+<body>
+
+<!-- Header -->
+<header class="header">
+  <div style="display:flex;align-items:center">
+    <div class="header-title">MDO-Nexus-OODA</div>
+    <span class="header-subtitle">Cross-Domain Synergy Engine</span>
+  </div>
+  <div class="header-right">
+    <span class="header-badge"><span class="pulse-dot"></span> LIVE</span>
+    <span class="header-badge" style="border-color:rgba(139,92,246,.25);color:#8b5cf6;background:rgba(139,92,246,.06)">v2.0</span>
+  </div>
+</header>
+
+<!-- Main Content -->
+<div class="container">
+  <div class="dashboard-grid">
+
+    <!-- Panel 1: OODA Cycle Ring -->
+    <div class="panel panel-ooda">
+      <div class="panel-title" style="color:#4CAF50">
+        <span class="icon">&#x1F504;</span> OODA Decision Cycle
+      </div>
+      <div class="ooda-container">
+        <canvas id="oodaCanvas"></canvas>
+        <div class="ooda-info">
+          <div class="phase-name" style="color:#4CAF50">OBSERVE</div>
+          <div class="cycle-count">Cycle #1 | Tempo: Operational</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Panel 2: Cybernetics Convergence -->
+    <div class="panel panel-cybernetics">
+      <div class="panel-title" style="color:#06b6d4">
+        <span class="icon">&#x1F4C8;</span> Cybernetics Convergence
+      </div>
+      <div class="chart-container">
+        <canvas id="cyberneticsCanvas"></canvas>
+      </div>
+      <div class="chart-legend">
+        <div class="legend-item">
+          <span class="legend-dot" style="background:#06b6d4"></span> Reliability
+        </div>
+        <div class="legend-item">
+          <span class="legend-dot" style="background:#10b981"></span> Target (95%)
+        </div>
+      </div>
+      <div class="chart-stats">
+        <div class="chart-stat">
+          <div class="value" style="color:#06b6d4">--</div>
+          <div class="label">Current</div>
+        </div>
+        <div class="chart-stat">
+          <div class="value" style="color:#10b981">--</div>
+          <div class="label">Wiener Gain</div>
+        </div>
+        <div class="chart-stat">
+          <div class="value" style="color:#f59e0b">--</div>
+          <div class="label">Conv. Rate</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Panel 3: Synergy Matrix -->
+    <div class="panel panel-synergy">
+      <div class="panel-title" style="color:#FF9800">
+        <span class="icon">&#x1F300;</span> Cross-Domain Synergy Matrix
+      </div>
+      <div class="synergy-container" id="synergyContainer">
+        <div style="text-align:center;color:var(--text-dim);padding:2rem;font-size:.8rem">Loading synergy data...</div>
+      </div>
+    </div>
+
+    <!-- Panel 4: Domain Status -->
+    <div class="panel panel-domains">
+      <div class="panel-title" style="color:#8b5cf6">
+        <span class="icon">&#x1F3AF;</span> Domain Status
+      </div>
+      <div class="domains-grid" id="domainsContainer">
+        <div style="text-align:center;color:var(--text-dim);padding:2rem;font-size:.8rem;grid-column:1/-1">Loading domains...</div>
+      </div>
+    </div>
+
+    <!-- Panel 5: Wiener Feedback Loop -->
+    <div class="panel panel-feedback panel-full">
+      <div class="panel-title" style="color:#2196F3">
+        <span class="icon">&#x1F501;</span> Wiener Feedback Control Loop
+      </div>
+      <canvas id="feedbackCanvas"></canvas>
+    </div>
+
+    <!-- Panel 6: DDD-SDD-TDD Tracker -->
+    <div class="panel panel-tracker panel-full">
+      <div class="panel-title" style="color:#10b981">
+        <span class="icon">&#x1F9EA;</span> DDD-SDD-TDD Recursive Cycle Tracker
+      </div>
+      <div id="trackerContainer">
+        <div style="text-align:center;color:var(--text-dim);padding:2rem;font-size:.8rem">Loading cycle data...</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="footer-left">
+    MDO-Nexus-OODA v2.0.0 &middot; Cross-Domain Synergy Engine &middot; OODA + Cybernetics Architecture
+  </div>
+  <div class="footer-status" id="footerStatus">
+    <div class="status-indicator">
+      <span class="status-dot checking"></span>
+      <span>Connecting...</span>
+    </div>
+  </div>
+</footer>
+
+<!-- Scripts -->
+<script src="js/ooda-viz.js"></script>
+<script src="js/cybernetics-viz.js"></script>
+<script src="js/synergy-viz.js"></script>
+<script src="js/domain-viz.js"></script>
+<script src="js/feedback-viz.js"></script>
+<script src="js/ddd-sdd-tdd-viz.js"></script>
+<script src="js/app.js"></script>
+
+</body>
+</html>

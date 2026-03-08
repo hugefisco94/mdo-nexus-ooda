@@ -1,0 +1,37 @@
+trigger:
+  name: MDO Nexus OODA Push Trigger
+  identifier: mdo_nexus_push_trigger
+  enabled: true
+  description: "Triggers MDO Nexus OODA pipeline on push to master branch"
+  tags:
+    mdo: ""
+    nexus: ""
+  orgIdentifier: default
+  projectIdentifier: default_project
+  pipelineIdentifier: mdo_nexus_ooda_pipeline
+  source:
+    type: Webhook
+    spec:
+      type: Github
+      spec:
+        type: Push
+        spec:
+          connectorRef: account.hugefisco94_github
+          autoAbortPreviousExecutions: true
+          payloadConditions:
+            - key: targetBranch
+              operator: Equals
+              value: master
+          headerConditions: []
+          repoName: mdo-nexus-ooda
+          actions: []
+  inputYaml: |
+    pipeline:
+      identifier: mdo_nexus_ooda_pipeline
+      properties:
+        ci:
+          codebase:
+            build:
+              type: branch
+              spec:
+                branch: <+trigger.branch>

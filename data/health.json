@@ -1,0 +1,89 @@
+{
+  "services": [
+    {
+      "id": "do-gpu",
+      "name": "DO GPU (MI300X)",
+      "endpoint": "129.212.185.133",
+      "status": "online",
+      "latency": 45
+    },
+    {
+      "id": "vllm-gen",
+      "name": "RAG Generation (Qwen3-30B MoE)",
+      "endpoint": "129.212.185.133:8000/v1",
+      "status": "online",
+      "latency": 120
+    },
+    {
+      "id": "vllm-embed",
+      "name": "RAG Embedding (Qwen3-8B)",
+      "endpoint": "129.212.185.133:8001/v1",
+      "status": "online",
+      "latency": 35
+    },
+    {
+      "id": "vllm-rerank",
+      "name": "RAG Reranker (Qwen3-0.6B)",
+      "endpoint": "129.212.185.133:8002/v1",
+      "status": "online",
+      "latency": 15
+    },
+    {
+      "id": "litellm",
+      "name": "LiteLLM Proxy",
+      "endpoint": "localhost:4000",
+      "status": "online",
+      "latency": 12
+    },
+    {
+      "id": "harness",
+      "name": "Harness CI/CD",
+      "endpoint": "app.harness.io",
+      "status": "online",
+      "latency": 180
+    },
+    {
+      "id": "openrouter",
+      "name": "OpenRouter",
+      "endpoint": "openrouter.ai/api/v1",
+      "status": "online",
+      "latency": 95
+    },
+    {
+      "id": "github",
+      "name": "GitHub Pages",
+      "endpoint": "hugefisco94.github.io",
+      "status": "online",
+      "latency": 65
+    }
+  ],
+  "gpu": {
+    "model": "AMD MI300X 192GB HBM3",
+    "vram_total_gb": 206,
+    "vram_used_gb": 134,
+    "vram_pct": 65,
+    "models_loaded": 3,
+    "rag_stack": {
+      "generation": {
+        "model": "Qwen3-30B-A3B-Instruct-2507-FP8",
+        "port": 8000,
+        "type": "MoE",
+        "active_params": "3B",
+        "total_params": "30B",
+        "context": 32768
+      },
+      "embedding": {
+        "model": "Qwen3-Embedding-8B",
+        "port": 8001,
+        "dimensions": 4096,
+        "context": 8192
+      },
+      "reranker": {
+        "model": "Qwen3-Reranker-0.6B",
+        "port": 8002,
+        "context": 4096
+      }
+    }
+  },
+  "lastCheck": "2026-03-08T12:00:00Z"
+}

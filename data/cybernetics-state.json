@@ -1,0 +1,21 @@
+{
+  "convergenceHistory": [
+    { "cycle": 1, "reliability": 0.45, "timestamp": "2026-03-08T00:00:00Z" },
+    { "cycle": 2, "reliability": 0.58, "timestamp": "2026-03-08T00:05:00Z" },
+    { "cycle": 3, "reliability": 0.67, "timestamp": "2026-03-08T00:10:00Z" },
+    { "cycle": 4, "reliability": 0.72, "timestamp": "2026-03-08T00:15:00Z" },
+    { "cycle": 5, "reliability": 0.76, "timestamp": "2026-03-08T00:20:00Z" },
+    { "cycle": 6, "reliability": 0.80, "timestamp": "2026-03-08T00:25:00Z" },
+    { "cycle": 7, "reliability": 0.83, "timestamp": "2026-03-08T00:30:00Z" },
+    { "cycle": 8, "reliability": 0.85, "timestamp": "2026-03-08T00:35:00Z" }
+  ],
+  "targetReliability": 0.95,
+  "currentReliability": 0.85,
+  "wienerGain": 0.42,
+  "dampingFactor": 0.78,
+  "steadyStateError": 0.03,
+  "dddCycles": 14,
+  "sddCycles": 11,
+  "tddCycles": 181,
+  "convergenceRate": 0.062
+}

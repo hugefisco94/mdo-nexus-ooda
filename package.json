@@ -1,0 +1,21 @@
+{
+  "name": "mdo-nexus-ooda",
+  "version": "1.0.0",
+  "description": "MDO Nexus OODA - Multi-Domain Operations with Observe-Orient-Decide-Act loop",
+  "main": "src/server.js",
+  "bin": {
+    "mdo-nexus": "bin/mdo-nexus.js"
+  },
+  "scripts": {
+    "start": "node src/server.js",
+    "test": "node test/run.js",
+    "deploy": "node bin/mdo-nexus.js deploy"
+  },
+  "dependencies": {
+    "express": "^4.21.0",
+    "ws": "^8.18.0",
+    "cors": "^2.8.5"
+  },
+  "keywords": ["mdo", "ooda", "cybernetics", "multi-domain"],
+  "license": "MIT"
+}

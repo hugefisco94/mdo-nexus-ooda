@@ -1,0 +1,198 @@
+pipeline:
+  name: MDO Nexus OODA Pipeline
+  identifier: mdo_nexus_ooda_pipeline
+  projectIdentifier: default_project
+  orgIdentifier: default
+  tags:
+    mdo: ""
+    nexus: ""
+    ooda: ""
+  properties:
+    ci:
+      codebase:
+        connectorRef: account.hugefisco94_github
+        repoName: mdo-nexus-ooda
+        build: <+input>
+  stages:
+    - stage:
+        name: "OBSERVE - Run Tests"
+        identifier: observe_tests
+        type: CI
+        spec:
+          cloneCodebase: true
+          platform:
+            os: Linux
+            arch: Amd64
+          runtime:
+            type: Cloud
+            spec: {}
+          execution:
+            steps:
+              - step:
+                  type: Run
+                  name: Run Test Suite
+                  identifier: run_tests
+                  spec:
+                    shell: Sh
+                    command: |
+                      echo "=========================================="
+                      echo " OBSERVE PHASE - Test Execution"
+                      echo "=========================================="
+                      echo ""
+                      node --version
+                      echo ""
+                      echo "--- Running test suite ---"
+                      node test/run.js
+                      echo ""
+                      echo "--- Test execution complete ---"
+
+    - stage:
+        name: "ORIENT - Build Validation"
+        identifier: orient_validation
+        type: CI
+        spec:
+          cloneCodebase: true
+          platform:
+            os: Linux
+            arch: Amd64
+          runtime:
+            type: Cloud
+            spec: {}
+          execution:
+            steps:
+              - step:
+                  type: Run
+                  name: Validate Data and Assets
+                  identifier: validate_assets
+                  spec:
+                    shell: Sh
+                    command: |
+                      echo "=========================================="
+                      echo " ORIENT PHASE - Build Validation"
+                      echo "=========================================="
+                      echo ""
+                      echo "--- Checking data files ---"
+                      ERRORS=0
+                      for f in data/cybernetics-state.json data/domains.json data/health.json data/ooda-state.json data/synergy-matrix.json data/test-results.json; do
+                        if [ -f "$f" ]; then
+                          node -e "JSON.parse(require('fs').readFileSync('$f','utf8')); console.log('  [OK] $f')"
+                          if [ $? -ne 0 ]; then ERRORS=$((ERRORS+1)); fi
+                        else
+                          echo "  [MISSING] $f"
+                          ERRORS=$((ERRORS+1))
+                        fi
+                      done
+                      echo ""
+                      echo "--- Checking static assets ---"
+                      for d in css js; do
+                        if [ -d "$d" ]; then
+                          COUNT=$(find "$d" -type f | wc -l)
+                          echo "  [OK] $d/ ($COUNT files)"
+                        else
+                          echo "  [MISSING] $d/"
+                          ERRORS=$((ERRORS+1))
+                        fi
+                      done
+                      echo ""
+                      echo "--- Checking source modules ---"
+                      for f in src/core/ooda-engine.js src/core/cybernetics-engine.js src/core/synergy-matrix.js src/core/feedback-loop.js; do
+                        if [ -f "$f" ]; then
+                          echo "  [OK] $f"
+                        else
+                          echo "  [MISSING] $f"
+                          ERRORS=$((ERRORS+1))
+                        fi
+                      done
+                      echo ""
+                      if [ $ERRORS -gt 0 ]; then
+                        echo "ORIENT FAILED: $ERRORS validation errors"
+                        exit 1
+                      fi
+                      echo "ORIENT PASSED: All assets validated"
+
+    - stage:
+        name: "DECIDE - Synergy Validation"
+        identifier: decide_synergy
+        type: CI
+        spec:
+          cloneCodebase: true
+          platform:
+            os: Linux
+            arch: Amd64
+          runtime:
+            type: Cloud
+            spec: {}
+          execution:
+            steps:
+              - step:
+                  type: Run
+                  name: Validate Synergy Matrix
+                  identifier: validate_synergy
+                  spec:
+                    shell: Sh
+                    command: |
+                      echo "=========================================="
+                      echo " DECIDE PHASE - Synergy Validation"
+                      echo "=========================================="
+                      echo ""
+                      node -e "
+                        const { SynergyMatrix } = require('./src/core/synergy-matrix');
+                        const matrixData = require('./data/synergy-matrix.json');
+                        const sm = new SynergyMatrix(matrixData);
+                        const v = sm.validate();
+                        console.log('Domain Count:', v.domainCount);
+                        console.log('Connection Count:', v.connectionCount);
+                        console.log('Valid:', v.valid);
+                        console.log('Issues:', v.issues.length);
+                        if (!v.valid) {
+                          console.error('Synergy matrix validation FAILED');
+                          v.issues.forEach(i => console.error('  -', i.from, '->', i.to, ':', i.issue));
+                          process.exit(1);
+                        }
+                        console.log('');
+                        console.log('DECIDE PASSED: Synergy matrix fully connected');
+                      "
+
+    - stage:
+        name: "ACT - Deploy to GitHub Pages"
+        identifier: act_deploy
+        type: CI
+        spec:
+          cloneCodebase: true
+          platform:
+            os: Linux
+            arch: Amd64
+          runtime:
+            type: Cloud
+            spec: {}
+          execution:
+            steps:
+              - step:
+                  type: Run
+                  name: Deploy to gh-pages
+                  identifier: deploy_ghpages
+                  spec:
+                    shell: Sh
+                    command: |
+                      echo "=========================================="
+                      echo " ACT PHASE - Deploy to GitHub Pages"
+                      echo "=========================================="
+                      echo ""
+                      git config user.email "ci@harness.io"
+                      git config user.name "Harness CI"
+                      echo ""
+                      echo "--- Building deployment ---"
+                      DEPLOY_DIR=$(mktemp -d)
+                      cp -r css js data docs index.html "$DEPLOY_DIR/" 2>/dev/null || true
+                      cp -r src "$DEPLOY_DIR/" 2>/dev/null || true
+                      echo ""
+                      echo "--- Pushing to gh-pages ---"
+                      cd "$DEPLOY_DIR"
+                      git init
+                      git checkout -b gh-pages
+                      git add -A
+                      git commit -m "Deploy from Harness CI [skip ci]"
+                      git remote add origin https://github.com/hugefisco94/mdo-nexus-ooda.git
+                      git push -f origin gh-pages
+                      echo ""
+                      echo "ACT COMPLETE: Deployed to gh-pages"

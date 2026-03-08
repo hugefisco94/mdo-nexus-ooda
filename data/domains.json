@@ -1,0 +1,70 @@
+{
+  "domains": [
+    {
+      "id": "intel",
+      "name": "INTELLIGENCE",
+      "icon": "\ud83d\udee1\ufe0f",
+      "color": "#9C27B0",
+      "description": "Security scanning, threat detection, vulnerability analysis",
+      "status": "active",
+      "health": 96,
+      "repos": ["mdo-intel-engine", "threat-matrix", "vuln-scanner"],
+      "agents": ["security-reviewer", "debugger", "qa-tester"]
+    },
+    {
+      "id": "cyber",
+      "name": "CYBER",
+      "icon": "\ud83d\udd12",
+      "color": "#F44336",
+      "description": "Cybersecurity operations, penetration testing, defense",
+      "status": "active",
+      "health": 92,
+      "repos": ["cyber-ops", "pen-test-suite", "firewall-rules"],
+      "agents": ["security-reviewer", "pen-tester", "incident-response"]
+    },
+    {
+      "id": "code",
+      "name": "CODE",
+      "icon": "\ud83d\udcbb",
+      "color": "#4CAF50",
+      "description": "Source code, builds, tests, deployments",
+      "status": "active",
+      "health": 98,
+      "repos": ["mdo-nexus-ooda", "ai-orchestration-hub", "mdo-command-center"],
+      "agents": ["executor", "build-fixer", "test-engineer"]
+    },
+    {
+      "id": "infra",
+      "name": "INFRASTRUCTURE",
+      "icon": "\u2601\ufe0f",
+      "color": "#2196F3",
+      "description": "Cloud resources, CI/CD, containers, networking",
+      "status": "active",
+      "health": 94,
+      "repos": ["docker-ai-gateway", "harness-pipelines", "terraform-configs"],
+      "agents": ["devops", "dagu", "docker"]
+    },
+    {
+      "id": "data",
+      "name": "DATA",
+      "icon": "\ud83d\udcca",
+      "color": "#FF9800",
+      "description": "Data pipelines, knowledge graphs, analytics",
+      "status": "active",
+      "health": 90,
+      "repos": ["data-pipeline", "knowledge-base", "analytics-engine"],
+      "agents": ["scientist", "doc-specialist", "explore"]
+    },
+    {
+      "id": "agent",
+      "name": "AGENT",
+      "icon": "\ud83e\udd16",
+      "color": "#00BCD4",
+      "description": "Agent orchestration, swarm coordination, task routing",
+      "status": "active",
+      "health": 97,
+      "repos": ["agent-swarm", "omc-core", "task-router"],
+      "agents": ["architect", "planner", "analyst"]
+    }
+  ]
+}

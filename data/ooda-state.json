@@ -1,0 +1,43 @@
+{
+  "currentPhase": "OBSERVE",
+  "phaseIndex": 0,
+  "cycleCount": 1,
+  "tempo": "operational",
+  "phases": [
+    {
+      "id": "observe",
+      "name": "OBSERVE",
+      "icon": "\ud83d\udc41\ufe0f",
+      "description": "Scan, Detect, Monitor",
+      "color": "#4CAF50",
+      "actions": ["Environmental scanning", "Threat detection", "Data collection", "Sensor fusion"]
+    },
+    {
+      "id": "orient",
+      "name": "ORIENT",
+      "icon": "\ud83e\udded",
+      "description": "Analyze, Synthesize, Context",
+      "color": "#2196F3",
+      "actions": ["Pattern analysis", "Context mapping", "Mental model update", "Cultural traditions"]
+    },
+    {
+      "id": "decide",
+      "name": "DECIDE",
+      "icon": "\u2696\ufe0f",
+      "description": "Plan, Prioritize, Commit",
+      "color": "#FF9800",
+      "actions": ["Hypothesis generation", "Option evaluation", "Resource allocation", "Decision point"]
+    },
+    {
+      "id": "act",
+      "name": "ACT",
+      "icon": "\u26a1",
+      "description": "Execute, Deploy, Verify",
+      "color": "#F44336",
+      "actions": ["Task execution", "Deployment", "Feedback capture", "Verification"]
+    }
+  ],
+  "history": [
+    { "cycle": 1, "phase": "OBSERVE", "timestamp": "2026-03-08T00:00:00Z", "duration": 12000 }
+  ]
+}
