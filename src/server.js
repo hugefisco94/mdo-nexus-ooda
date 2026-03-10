@@ -10,6 +10,7 @@ const SynergyService = require('./services/synergy-service');
 const AgentService = require('./services/agent-service');
 const DomainService = require('./services/domain-service');
 const TelemetryService = require('./services/telemetry-service');
+const OsintService = require('./services/osint-service');
 
 const PORT = parseInt(process.env.PORT, 10) || 3000;
 const app = express();
@@ -28,6 +29,7 @@ const cybernetics = new CyberneticsService();
 const synergy = new SynergyService();
 const agent = new AgentService();
 const domain = new DomainService();
+const osint = new OsintService();
 const telemetry = new TelemetryService({ ooda, cybernetics, synergy, agent, domain });
 
 // --- Routes ---
@@ -44,7 +46,8 @@ app.get('/health', (req, res) => {
       synergy: 'active',
       agent: 'active',
       domain: 'active',
-      telemetry: 'active'
+      telemetry: 'active',
+      osint: 'active'
     }
   });
 });
@@ -208,6 +211,72 @@ app.get('/api/agent/route', (req, res) => {
 app.post('/api/agent/consensus', (req, res) => {
   try {
     res.json(agent.consensus(req.body.responses || []));
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
+// OSINT operations
+app.get('/api/osint/feeds', async (req, res) => {
+  try {
+    const result = await osint.collectFeeds({ maxItems: parseInt(req.query.limit) || 50 });
+    res.json(result);
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
+app.get('/api/osint/social', async (req, res) => {
+  try {
+    const result = await osint.enrichBookmarks(req.query.q || '', { action: req.query.action || 'search' });
+    res.json(result);
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
+app.post('/api/osint/imagery', async (req, res) => {
+  try {
+    const { url, confidenceThreshold, maxDetections } = req.body;
+    if (!url) return res.status(400).json({ error: 'url required' });
+    const result = await osint.analyzeImagery(url, { confidenceThreshold, maxDetections });
+    res.json(result);
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
+app.get('/api/osint/analysis', async (req, res) => {
+  try {
+    const result = await osint.structuredAnalysis(
+      req.query.prompt || 'general assessment',
+      { method: req.query.method || 'ach' }
+    );
+    res.json(result);
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
+app.get('/api/osint/dashboard', (req, res) => {
+  try {
+    res.json(osint.dashboard());
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
+app.get('/api/osint/probe', async (req, res) => {
+  try {
+    res.json(await osint.probeOsint());
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
+app.get('/api/osint/aggregate', async (req, res) => {
+  try {
+    res.json(await osint.aggregateIntel({ analysisPrompt: req.query.prompt }));
   } catch (e) {
     res.status(500).json({ error: e.message });
   }

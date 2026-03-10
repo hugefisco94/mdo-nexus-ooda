@@ -91,6 +91,12 @@
       );
     }
 
+    // 7. OSINT Intelligence
+    if (window.OsintViz) {
+      state.vizInstances.osint = new OsintViz('osintContainer');
+      loadOsintData();
+    }
+
     // Footer health indicators
     updateHealthIndicators();
   }
@@ -132,6 +138,22 @@
     container.appendChild(refresh);
   }
 
+  /** Load OSINT data from API or static fallback */
+  async function loadOsintData() {
+    try {
+      var resp = await fetch('/api/osint/dashboard', { cache: 'no-cache' });
+      if (resp.ok) {
+        var data = await resp.json();
+        if (state.vizInstances.osint) state.vizInstances.osint.update(data);
+        return;
+      }
+    } catch (_) { /* API not available, use static fallback */ }
+    // Static fallback: empty state
+    if (state.vizInstances.osint) {
+      state.vizInstances.osint.update({ feeds: null, social: null, imagery: null, analysis: null });
+    }
+  }
+
   /** Auto-refresh cycle */
   function startAutoRefresh() {
     if (state.refreshTimer) clearInterval(state.refreshTimer);
@@ -144,6 +166,8 @@
       if (state.vizInstances.cybernetics) {
         state.vizInstances.cybernetics.updateStats();
       }
+      // Refresh OSINT
+      if (state.vizInstances.osint) loadOsintData();
     }, REFRESH_INTERVAL);
   }
 

@@ -39,9 +39,10 @@ const DOMAIN_DEFS = {
   intelligence: {
     label: 'Intelligence',
     agents: ['security-reviewer', 'debugger', 'qa-tester'],
-    description: 'Security analysis, debugging, quality assurance',
-    adapters: ['gpu', 'codex', 'gemini'],
+    description: 'Security analysis, debugging, quality assurance, OSINT collection',
+    adapters: ['gpu', 'codex', 'gemini', 'watchtower', 'siftly', 'daaf', 'deimv2'],
     gpuModel: '72b',
+    osintCapabilities: ['rss-feeds', 'social-bookmarks', 'structured-analysis', 'imagery-detection'],
   },
   agent: {
     label: 'Agent Operations',
@@ -103,6 +104,11 @@ const SYNERGY_MAP = {
   agent_to_orch:   'Swarm routing informs orchestration decisions',
   agent_to_data:   'Agent findings feed knowledge base',
   agent_to_infra:  'Model routing drives infrastructure scaling',
+  osint_to_intel:  'OSINT feeds enrich intelligence assessments',
+  osint_to_code:   'Threat detection triggers automated remediation',
+  osint_to_orch:   'Threat level adjusts operational tempo',
+  osint_to_data:   'OSINT findings feed knowledge base',
+  intel_to_osint:  'Intelligence gaps drive targeted collection',
 };
 
 class MdoDomains {
@@ -129,7 +135,9 @@ class MdoDomains {
       orchestration:  ['plan', 'architect', 'design', 'strategy', '설계', '계획', '아키텍처', '전략'],
       data_knowledge: ['research', 'search', 'document', 'analyze', '연구', '검색', '문서', '분석'],
       infrastructure: ['deploy', 'pipeline', 'docker', 'ci', 'cd', '배포', '인프라', '파이프라인'],
-      intelligence:   ['security', 'debug', 'test', 'audit', 'vulnerability', '보안', '디버그', '테스트', '취약점'],
+      intelligence:   ['security', 'debug', 'test', 'audit', 'vulnerability', 'osint', 'rss', 'feed', 'news', 'threat',
+                       'bookmark', 'social media', 'object detection', 'imagery', 'satellite', 'geospatial',
+                       '보안', '디버그', '테스트', '취약점', '위협', '정보수집'],
       agent:          ['agent', 'swarm', 'consensus', 'routing', 'lifecycle', '에이전트', '스웜', '합의', '라우팅'],
     };
 

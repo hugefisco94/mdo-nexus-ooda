@@ -22,6 +22,7 @@ const PHASE_DOCTRINE = {
     jpReference: 'JP 2-01 JIPOE Step 1: Define Operating Environment',
     cyberneticsRole: 'sensor',
     collectionDisciplines: ['SIGINT', 'OSINT', 'HUMINT', 'GEOINT', 'TECHINT'],
+    osintAdapters: ['watchtower', 'siftly', 'deimv2'],
   },
   orient: {
     gpuModel: '72b',
@@ -30,6 +31,7 @@ const PHASE_DOCTRINE = {
     jpReference: 'JP 2-01 JIPOE Step 2: Describe Environmental Effects',
     cyberneticsRole: 'comparator',
     analyticMethods: ['pattern_recognition', 'anomaly_detection', 'trend_analysis'],
+    osintAdapters: ['siftly', 'daaf'],
   },
   decide: {
     gpuModel: 'claude',
@@ -38,6 +40,7 @@ const PHASE_DOCTRINE = {
     jpReference: 'JP 2-01 JIPOE Step 3: Evaluate Adversary',
     cyberneticsRole: 'decision_function',
     outputFormat: 'ICD_203_COMPLIANT',
+    osintAdapters: ['daaf'],
   },
   act: {
     gpuModel: '72b',

@@ -12,6 +12,10 @@ const { HarnessAdapter } = require('./harness');
 const { GpuAdapter } = require('./gpu');
 const { ClaudeAdapter } = require('./claude');
 const { OpenRouterAdapter } = require('./openrouter');
+const { WatchtowerAdapter } = require('./watchtower');
+const { SiftlyAdapter } = require('./siftly');
+const { DaafAdapter, SAT_METHODS } = require('./daaf');
+const { DeimV2Adapter } = require('./deimv2');
 
 /**
  * Create and return all adapters as a Map.
@@ -22,6 +26,10 @@ function createAdapters(config) {
   map.set('gpu', new GpuAdapter(config));
   map.set('claude', new ClaudeAdapter(config));
   map.set('openrouter', new OpenRouterAdapter(config));
+  map.set('watchtower', new WatchtowerAdapter(config));
+  map.set('siftly', new SiftlyAdapter(config));
+  map.set('daaf', new DaafAdapter(config));
+  map.set('deimv2', new DeimV2Adapter(config));
   map.set('codex', new CodexAdapter(config));
   map.set('gemini', new GeminiAdapter(config));
   map.set('opencode', new OpenCodeAdapter(config));
