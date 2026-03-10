@@ -55,23 +55,22 @@ class DeimV2Adapter extends BaseAdapter {
         }
       }
 
-      const body = {
-        image: prompt,
-        confidence_threshold: options.confidenceThreshold || this.confidenceThreshold,
-        max_detections: options.maxDetections || 100,
-        strip_exif: options.stripExif !== false, // default: strip geotags
-      };
+      const body = prompt.startsWith('http')
+        ? { image_url: prompt }
+        : { image_base64: prompt };
+      body.threshold = options.confidenceThreshold || this.confidenceThreshold;
+      body.max_detections = options.maxDetections || 100;
 
-      const result = await this._api('/detect', 'POST', body);
+      const result = await this._api('/v1/detect', 'POST', body);
 
       return {
         detections: (result.detections || []).map(d => ({
-          label: d.label || d.class_name,
-          confidence: d.confidence || d.score,
-          bbox: d.bbox || d.box,
+          label: d.class_name || `class_${d.label}`,
+          confidence: d.score,
+          bbox: d.bbox,
         })),
         imageSize: result.image_size || null,
-        inferenceTime: result.inference_time || null,
+        inferenceTime: result.inference_ms || null,
         model: 'DEIMv2-S',
         exifStripped: true,
         detectedAt: new Date().toISOString(),
